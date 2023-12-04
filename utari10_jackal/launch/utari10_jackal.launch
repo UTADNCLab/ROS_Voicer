@@ -1,0 +1,10 @@
+<launch>
+  <!-- Launches nodes for Clearpath Jackal -->
+  <include file="$(find utari10_jackal)/launch/jackal_base.launch"/>
+  
+  <!-- Launches nodes for Kinova Arm -->
+  <include file="$(find utari10_jackal)/launch/kinova_robot.launch"/>
+  <!-- Launch robot state publisher with both Jackal and Kinova Arm data -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+</launch>
+

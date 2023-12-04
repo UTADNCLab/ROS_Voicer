@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+<!-- Zed Camera -->
+
+  <link name="zed_camera_center">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <visual>
+      <origin xyz="-0.04 -0.068 -0.05" rpy="0 0 3.14159"/>
+      <geometry>
+        <mesh filename="package://utari10_jackal/meshes/utari10_jackal.STL"/>
+      </geometry>
+      <material name="dark_grey" />
+    </visual>
+    <collision>
+      <origin xyz="-0.04 -0.068 -0.05" rpy="0 0 3.14159"/>
+      <geometry>
+        <mesh filename="package://utari10_jackal/meshes/utari10_jackal.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="zed_camera_joint" type="fixed">
+    <parent link="front_mount" />
+    <child link="zed_camera_center" />
+    <origin xyz="0.1 0 0.05" rpy="0 0 0" />
+  </joint>
+
+<!-- Left Camera -->
+
+  <joint name="zed_left_camera_joint" type="fixed">
+      <parent link="zed_camera_center"/>
+      <child link="zed_left_camera_frame"/>
+      <origin xyz="0 -0.068 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="zed_left_camera_frame" />
+
+  <joint name="zed_left_camera_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="zed_left_camera_frame"/>
+      <child link="zed_left_camera_optical_frame"/>
+  </joint>
+
+  <link name="zed_left_camera_optical_frame"/>
+
+<!-- Right Camera -->
+
+  <joint name="zed_right_camera_joint" type="fixed">
+      <parent link="zed_camera_center"/>
+      <child link="zed_right_camera_frame"/>
+      <origin xyz="0 0.068 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="zed_right_camera_frame" />
+
+  <joint name="zed_right_camera_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="zed_right_camera_frame"/>
+      <child link="zed_right_camera_optical_frame"/>
+  </joint>
+
+  <link name="zed_right_camera_optical_frame"/>
+
+<!-- Kinova Arm -->
+
+  <link name="j2n6s300_mount"/>
+
+  <joint name="kinova_mount" type="fixed">
+    <parent link="mid_mount" />
+    <child link="j2n6s300_mount" />
+    <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+  </joint>
+  
+  <joint name="kinova_base_to_mount" type="fixed">
+    <parent link="j2n6s300_mount" />
+    <child link="j2n6s300_link_base" />
+    <origin xyz="0 0.03 0" rpy="0 0 0"/>
+  </joint>
+
+  <xacro:include filename="$(find utari10_jackal)/urdf/j2n6s300.xacro" />
+  <xacro:j2n6s300 base_parent="j2n6s300_mount" prefix="j2n6s300"/>
+
+</robot>

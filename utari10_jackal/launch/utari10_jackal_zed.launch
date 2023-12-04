@@ -1,0 +1,122 @@
+<launch>
+  <!-- Jackal Arguments -->
+  <arg name="jackal_port" default="/dev/jackal" />
+  <arg name="enable_ekf" default="$(optenv ENABLE_EKF true)"/>
+
+  <!-- Kinova Arm Arguments -->
+  <arg name="use_urdf" default="true"/>
+  <arg name="kinova_robotType" default="j2n6s300" />
+  <arg name="kinova_robotName" default="$(arg kinova_robotType)"/>
+  <arg name="kinova_robotSerial" default="not_set" />
+  <arg name="use_jaco_v1_fingers" default="false" />
+  <arg name="feedback_publish_rate" default="0.1" />
+  <arg name="respawn_driver" default="False" />
+
+  <!-- Zed Camera Arguments -->
+  <arg name="svo_file"             default="" /> <!-- <arg name="svo_file" default="path/to/svo/file.svo"> -->
+  <arg name="stream"               default="" /> <!-- <arg name="stream" default="<ip_address>:<port>"> -->
+
+  <arg name="node_name"            default="zed_node" />
+  <arg name="camera_model"         default="zed" /> <!-- 'zed' or 'zedm' -->
+  <arg name="publish_urdf"         default="false" />
+  <arg name="camera_name"          default="zed" />
+
+  <arg name="base_frame"           default="front_mount" />
+
+  <arg name="cam_pos_x"             default="0.0" /> <!-- Position respect to base frame (i.e. "base_link) -->
+  <arg name="cam_pos_y"             default="0.0" /> <!-- Position respect to base frame (i.e. "base_link) -->
+  <arg name="cam_pos_z"             default="0.0" /> <!-- Position respect to base frame (i.e. "base_link) -->
+  <arg name="cam_roll"              default="0.0" /> <!-- Orientation respect to base frame (i.e. "base_link) -->
+  <arg name="cam_pitch"             default="0.0" /> <!-- Orientation respect to base frame (i.e. "base_link) -->
+  <arg name="cam_yaw"               default="0.0" /> <!-- Orientation respect to base frame (i.e. "base_link) -->
+
+  <!-- Include URDF for Jackal -->
+  <include file="$(find jackal_description)/launch/description.launch" />
+
+  <node pkg="jackal_base" type="jackal_node" name="jackal_node">
+    <rosparam>
+      # TODO: Specify these in code rather than here.
+      require:
+        publishers:
+          - status
+          - feedback
+          - imu/data_raw
+          - navsat/nmea_sentence
+        subscribers:
+          - cmd_drive
+          - wifi_connected
+    </rosparam>
+    <param name="port" value="$(arg jackal_port)" />
+    <param name="wireless_interface" value="$(optenv JACKAL_WIRELESS_INTERFACE wlp2s0)" />
+  </node>
+
+  <!-- TODO: Eliminate this by compiling the necessary message definitions into jackal_base. -->
+  <node pkg="rosserial_python" type="message_info_service.py" name="rosserial_message_info" />
+
+  <!-- Translate Sentence messages from the MCU to NavSatFix messages -->
+  <node pkg="nmea_navsat_driver" type="nmea_topic_driver" name="nmea_topic_driver" ns="navsat" />
+
+  <!-- Filter raw gyro data into a usable IMU message -->
+  <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter">
+    <rosparam file="$(eval optenv('JACKAL_MAG_CONFIG', find('jackal_base')+'/config/mag_config_default.yaml'))" />
+    <rosparam>
+      gain: 0.1
+      zeta: 0.001
+      publish_tf: false
+    </rosparam>
+  </node>
+
+  <!-- Node for Kinova Arm Driver -->
+  <node name="$(arg kinova_robotName)_driver" pkg="kinova_driver" type="kinova_arm_driver" output="screen" cwd="node" args="$(arg kinova_robotType)" respawn="$(arg respawn_driver)">
+    <rosparam file="$(find kinova_bringup)/launch/config/robot_parameters.yaml" command="load" />
+    <param name="serial_number" value="$(arg kinova_robotSerial)" />   
+    <param name="robot_name" value="$(arg kinova_robotName)" />   
+    <param name="robot_type" value="$(arg kinova_robotType)" />   
+    <param name="use_jaco_v1_fingers" value="$(arg use_jaco_v1_fingers)" />   
+    <param name="status_interval_seconds" value="$(arg feedback_publish_rate)" />
+  </node>
+
+  <!-- Node for Kinova Arm Joint State publisher -->
+  <node name="utari10_jackal_state_publisher"
+    pkg="robot_state_publisher"
+    type="robot_state_publisher">
+    <remap from="joint_states" to="/$(arg kinova_robotName)_driver/out/joint_state"/>
+  </node>
+
+  <!-- Differential controller and basic localization -->
+  <include file="$(find jackal_control)/launch/control.launch" />
+
+  <!-- Teleoperation via joystick and rviz interactive markers -->
+  <include file="$(find jackal_control)/launch/teleop.launch" />
+
+  <!-- Diagnostic Aggregator for robot monitor usage -->
+  <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator">
+    <rosparam command="load" file="$(find jackal_base)/config/diagnostic_analyzers.yaml" />
+  </node>
+
+  <!-- Add Diagnostic Analyzers for ekf localization if enabled --> 
+  <group if="$(arg enable_ekf)">
+    <node pkg="diagnostic_aggregator" type="add_analyzers" name="add_localization_analyzers">
+      <rosparam command="load" file="$(find jackal_base)/config/localization_analyzers.yaml" />
+    </node>
+  </group>
+
+  <!-- Node for Zed Camera -->
+  <group ns="$(arg camera_name)">
+    <include file="$(find zed_wrapper)/launch/include/zed_camera.launch.xml">
+        <arg name="camera_name"         value="$(arg camera_name)" />
+        <arg name="svo_file"            value="$(arg svo_file)" />
+        <arg name="stream"              value="$(arg stream)" />
+        <arg name="node_name"           value="$(arg node_name)" />
+        <arg name="camera_model"        value="$(arg camera_model)" />
+        <arg name="base_frame"          value="$(arg base_frame)" />
+        <arg name="publish_urdf"        value="$(arg publish_urdf)" />
+        <arg name="cam_pos_x"           value="$(arg cam_pos_x)" />
+        <arg name="cam_pos_y"           value="$(arg cam_pos_y)" />
+        <arg name="cam_pos_z"           value="$(arg cam_pos_z)" />
+        <arg name="cam_roll"            value="$(arg cam_roll)" />
+        <arg name="cam_pitch"           value="$(arg cam_pitch)" />
+        <arg name="cam_yaw"             value="$(arg cam_yaw)" />
+    </include>
+  </group>  
+</launch>
