@@ -179,7 +179,7 @@ class PicoVoicer:
                     recorder.start()
             pass
 
-access_key = '2saeQ0pr4C5VaUWzNDyGAM3vUMli/zt6efotQubsLICInVRXZCRWOA=='  # Required Picovoice Access Key
+access_key = #Insert Picovoice Access Key Here
 context_path = "Picovoice/Rhino/arm_move_en_linux.rhn"  # Rhino .rhn file path
 keyword_path = ["Picovoice/Porcupine/Hey-Jackson_en_linux_v3_0_0.ppn"] #Porcupine .ppn file path
 
