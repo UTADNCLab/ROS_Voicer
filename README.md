@@ -39,11 +39,17 @@ Auto sourcing ROS may be beneficial but doing the same with the catkin workspace
 
 Now we can move on to using the voice command programs.
 
+# ROS_Voicer and utari10_jackal Package
+
+This section covers all that is required to Run the utari10_jackal package and the ROS_Voicer script within it. More in-depth tutorials will be available in the wiki, and will be linked accordingly.
+[ utari10_jackal README.md](ROS_Voicer_Packages/utari10_jackal/README.md)
+
 # TurtleBot Voice Commander
 
-This section covers all that is required to run the TurtleBot Voice Commander program. It will also cover how to use the program. More in-depth tutorials will be available in the wiki, and will be linked accordingly.
+This section covers all that is required to run the TurtleBot Voice Commander program. It will also cover how to use the program. Just like for the ROS_Voicer package, more in-depth tutorials will be available in the wiki, and will be linked accordingly.
 [Turtlebot_README.md](TurtleBot_Voice/Turtlebot_README.md)
+
 # Jaco Voice Commander
 
-This section will cover all that is required to run the Jaco Voice Commander program. It will also cover how to use the program. Just like for the Turtlebot, more in-depth tutorials will be available in the wiki, and will be linked accordingly.
+This section will cover all that is required to run the Jaco Voice Commander program. It will also cover how to use the program. Just like for the Turtlebot and ROS_Voicer, more in-depth tutorials will be available in the wiki, and will be linked accordingly.
 [Jaco_README.md](Jaco_Voice/Jaco_README.md)
