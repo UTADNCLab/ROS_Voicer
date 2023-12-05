@@ -1,11 +1,13 @@
 # ROS_Voicer
 **Robotic Arm Control with Human Voice**
 
-This is a project for The University of Texas at Arlington's Dynamic Networks and Control Laboratory. It's purpose is to command a robot arm to complete various tasks with simple speech commands. This is intended to be a comprehensive tutorial so that the project is completely replicable. This project existed in two phases. First I used a TurtleBot2i's PhantomX Pincher Arm, and then I moved on to applying the same principles to the Jaco2 Arm by Kinova Robotics.
+This is a project for The University of Texas at Arlington's Dynamic Networks and Control Laboratory. It's purpose is to command a robot arm to complete various tasks with simple speech commands. This is intended to be a comprehensive tutorial so that the project is completely replicable. This project existed in three phases. First I used a TurtleBot2i's PhantomX Pincher Arm; then I moved on to applying the same principles to the Jaco2 Arm by Kinova Robotics; Finally, I applied all that I learned to a complete robot package - a custom Clearpath Jackal configuration that includes the Jaco2 arm and the Stereolabs ZED Stereo Camera as accessories. 
 
-**For both programs, my computer of choice was my personal laptop, a Samsung Galaxy Book Flex Alpha (2019), using the built in microphone. Not sure of the processing and memory requirements but this model had an Intel Core i7 (10th Gen) processor, 12 GB of RAM, and a 512 GB SSD, 256 of which was partitioned for the Linux Distro. You may or may not need a machine with comparable specs to be able to achieve this comfortably.**
+**For the two standalone arm programs, my computer of choice was my personal laptop, a Samsung Galaxy Book Flex Alpha (2019), using the built in microphone. Not sure of the processing and memory requirements but this model had an Intel Core i7 (10th Gen) processor, 12 GB of RAM, and a 512 GB SSD, 256 of which was partitioned for the Linux Distro. You may or may not need a machine with comparable specs to be able to achieve this comfortably.**
 
-## Required Software - For Both Robots
+**For the final package, the Jackal included its own built-in PC with an NVIDIA GPU. This is because use of the depth camera's software development kit required the use of NVIDIA graphics cards. As a result, primary development was moved to a desktop computer in the lab with an NVIDIA GPU - an NVIDIA Quadro P4000, the same GPU the Jackal has. Both PCs had SSDs as their storage option. The Jackal has a Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, with 32 GB of RAM, and the PC has a Intel(R) Core(TM) i7-9800X CPU @ 3.80GHz, with 64 GB of RAM. Performance may vary if system specifications are below these figures.**
+
+## Required Software - For All Robots
 1. **Operating System:** Ubuntu 20.04 Focal Fossa
 2. **Robot Operating System (ROS) Version:** ROS Noetic Ninjemys
 3. **Script Programming Language:** Python 3.8.10
