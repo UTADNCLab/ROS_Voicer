@@ -1,7 +1,7 @@
 from playsound import playsound as ps
 from termcolor import colored
 
-# voiceline.py - Class that contains all of the Jackal's voiceline
+# voiceline.py - Class that contains all of the Jackal's speech
 # Carlos Mella-Rijo
 # Dynamic Networks and Control Laboratory
 # University of Texas at Arlington, Department of Electrical Engineering
