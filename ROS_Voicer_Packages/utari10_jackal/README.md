@@ -6,6 +6,29 @@ This will describe how to install and use all the packages present within this R
 
 A custom repository for the UTARI10_Jackal complete with ZED Camera and Kinova Jaco-2 manipulator arm. Originally provided by Clearpath Robotics when the UTARI10_Jackal was commissioned -- Now it contains additional custom hardware launch files to launch the arm and car sections as one unified robot description. Also contains the ROS_Voicer voice_command package within it.
 
+### Adding accessories to main Jackal hardware description
+The custom urdf file that includes the arm and ZED Camera accessories must be added to the Jackal's .urdf file before running this package.
+In your workspace, navigate to the file jackal.urdf.xacro in your catkin workspace; it should be in the path:
+
+```
+~/catkin_ws/jackal/jackal_description/urdf/
+```
+Open this file with your favorite text editor, and at the end of the file, add the following line:
+
+```
+<xacro:include filename="$(find utari10_jackal)/urdf/jackal_description.urdf.xacro" />
+```
+
+Also create a fixed joint to attach the accessories to the Jackal. Must be in this format:
+```
+<link name="link_name"></link>
+  <joint name="joint_name" type="fixed">
+    <parent link="link_on_jackal" />
+    <child link="j2n6s300_link_base" />
+    <origin xyz="${mount_spacing} 0 0" />
+  </joint>
+```
+
 **ROS Dependencies:**
 
 1. [jackal](https://github.com/jackal/jackal)
@@ -29,20 +52,37 @@ A package that allows for voice-commanded control of the UTARI10_Jackal platform
 **utari10_jackal** and all of its dependencies
 
 **Python Packages needed:**
-1. [actionlib](https://wiki.ros.org/actionlib)
+    **From ROS**
+    1. actionlib
+    2. geometry_msgs
+    3. kinova_msgs
+    4. tf
+    **From Python Standard Library**
+    1. math
+    2. threading
+    3. time
+    **From PIP**
+    1. OpenCV -
+    2. Playsound -
+    3. Termcolor -
+    4. YOLOv5 - [yolov5](https://github.com/ultralytics/yolov5)
+    
+
+    
+1. actionlib - From ROS Packages
 2. [cv2](https://pypi.org/project/opencv-python/)
 3. [geometry_msgs](https://index.ros.org/p/geometry_msgs/)
 4. [kinova_msgs]()
-5. [math]()
-6. [playsound]()
+5. math
+6. [playsound](https://pypi.org/project/playsound/)
 7. [pyzed]()
 8. [rospy]()
 9. [std_msgs]()
-10. [termcolor]()
+10. [termcolor](https://pypi.org/project/termcolor/)
 11. [tf]()
-12. [threading]()
-13. [time]()
-14. [yolov5]()
+12. threading 
+13. time
+14. 
 
 To run it, navigate to the ROS_Voicer_Python_Files directory, and run:
 
