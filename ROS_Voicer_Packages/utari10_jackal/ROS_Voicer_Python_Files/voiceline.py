@@ -1,6 +1,11 @@
 from playsound import playsound as ps
 from termcolor import colored
 
+# voiceline.py - Class that contains all of the Jackal's voiceline
+# Carlos Mella-Rijo
+# Dynamic Networks and Control Laboratory
+# University of Texas at Arlington, Department of Electrical Engineering
+
 class VoiceLine:
     def greeting():
         print(colored('JACKSON says:', 'blue') + "Hello There!")
