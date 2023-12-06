@@ -10,7 +10,11 @@ from kinova_msgs.srv import HomeArm, HomeArmRequest, HomeArmResponse
 import actionlib
 import std_msgs.msg
 
-# Classes for movement of arm and jackal
+# robotmove.py - Class for movement and control of arm and jackal
+# Carlos Mella-Rijo
+# Dynamic Networks and Control Laboratory
+# University of Texas at Arlington, Department of Electrical Engineering
+
 class RobotMove:
     rospy.init_node('Robot_Move', anonymous=True)
     #Default Orientation variables - i convert r-p-y to quarternion for simplicity 
