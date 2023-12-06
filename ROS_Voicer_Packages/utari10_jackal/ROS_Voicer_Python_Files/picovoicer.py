@@ -10,6 +10,10 @@ from geometry_msgs.msg import Twist
 from kinova_msgs.msg import PoseVelocity, JointVelocity
 from shared_instances import zc
 
+# picovoicer.py - class that contains all audio processing done by PicoVoice Modules and calls of other classes to facilitate movement
+# Carlos Mella-Rijo
+# Dynamic Networks and Control Laboratory
+# University of Texas at Arlington, Department of Electrical Engineering
 class PicoVoicer:
     rate = rospy.Rate(1)
     def audio_processing(self):
