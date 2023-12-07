@@ -44,7 +44,7 @@ Now we can move on to using the voice command programs.
 # ROS_Voicer and utari10_jackal Package
 
 This section covers all that is required to Run the utari10_jackal package and the ROS_Voicer script within it. More in-depth tutorials will be available in the wiki, and will be linked accordingly.
-[ utari10_jackal README.md](ROS_Voicer_Packages/utari10_jackal/README.md)
+[ utari10_jackal README.md](ROS_Voicer_Packages/ROS_VOICER_PACKAGES_README.md)
 
 # TurtleBot Voice Commander
 
