@@ -29,7 +29,7 @@ Also create a fixed joint to attach the accessories to the Jackal. Must be in th
   </joint>
 ```
 
-**ROS Dependencies:**
+### Dependencies
 
 1. [jackal](https://github.com/jackal/jackal)
 2. [jackal_robot](https://github.com/jackal/jackal_robot)
@@ -37,53 +37,57 @@ Also create a fixed joint to attach the accessories to the Jackal. Must be in th
 4. [moveit](https://github.com/ros-planning/moveit)
 5. [zed-ros-wrapper](https://github.com/stereolabs/zed-ros-wrapper)    
 
+### Running the Packages
+  
+To run it, make sure your workspace is sourced, and run:
+
+```
+roslaunch utari10_jackal utari10_jackal.launch
+```
+
+
 ## utari10_jackal_moveit_config
 
 MoveIt! Configuration created for the UTARI10_Jackal arm using the moveit_setup_assistant package. Allows for control of the chassis with interactive markers and motion planning for the arm. 
 
-**ROS Dependencies:**
+### Dependencies
 **utari10_jackal** and all of it's dependencies
+
+To run the MoveIt! visualization created by **utari10_jackal_moveit_config**, run this command:  
+```
+roslaunch utari10_jackal utari10_moveit.launch
+```
 
 ## ROS_Voicer
 
 A package that allows for voice-commanded control of the UTARI10_Jackal platform in conjunction with the aforementioned packages. Written in Python 3.8.10. 
 
-**ROS Dependencies:**
+### ROS Dependencies
 **utari10_jackal** and all of its dependencies
 
-**Python Packages needed:**
-    **From ROS**
-    1. actionlib
-    2. geometry_msgs
-    3. kinova_msgs
-    4. tf
-    **From Python Standard Library**
-    1. math
-    2. threading
-    3. time
-    **From PIP**
-    1. OpenCV -
-    2. Playsound -
-    3. Termcolor -
-    4. YOLOv5 - [yolov5](https://github.com/ultralytics/yolov5)
-    
+### Python Packages needed
+
+pyzed - ZED Camera Python API - comes bundled with ZED SDK.    
+[ZED Python API Install Instructions](https://docs.stereolabs.com/app-development/python/install/)
+
+#### From ROS
+1. actionlib
+2. geometry_msgs
+3. kinova_msgs
+4. tf
+#### From Python Standard Library
+1. math
+2. threading
+3. time
+#### From PIP
+1. OpenCV -[cv2](https://pypi.org/project/opencv-python/)
+2. Playsound -[playsound](https://pypi.org/project/playsound/)
+3. Termcolor - [termcolor](https://pypi.org/project/termcolor/)
+4. YOLOv5 - [yolov5](https://github.com/ultralytics/yolov5)
 
     
-1. actionlib - From ROS Packages
-2. [cv2](https://pypi.org/project/opencv-python/)
-3. [geometry_msgs](https://index.ros.org/p/geometry_msgs/)
-4. [kinova_msgs]()
-5. math
-6. [playsound](https://pypi.org/project/playsound/)
-7. [pyzed]()
-8. [rospy]()
-9. [std_msgs]()
-10. [termcolor](https://pypi.org/project/termcolor/)
-11. [tf]()
-12. threading 
-13. time
-14. 
-
+### Running the Script
+  
 To run it, navigate to the ROS_Voicer_Python_Files directory, and run:
 
 ```
